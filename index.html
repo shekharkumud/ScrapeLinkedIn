@@ -1,0 +1,90 @@
+<html>
+	<head>
+	    <script src="jquery.js"></script>
+	    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+	    <link rel="stylesheet" type="text/css" href="bootstrap.css.map">
+    <style>   
+         .hidden {
+            display: none;
+        }
+    </style>	
+	</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        Scrape Data From LinkedIn
+      </a>
+    </div>
+  </div>
+</nav>
+    <div class="container-fluid row">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="panel panel-default">
+              <div class="panel-heading">Enter URL</div>
+              <div class="panel-body">
+                  <div class="row">
+                        <div class="col-md-10">
+                            <input type="text" id="url" class="form-control"/>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" value="Get" onclick="callvalue()" class="btn btn-danger">Get Value</button></br>
+                        </div>
+                    </div><br />
+                    <div class="row hidden" id="progress">
+                    <div class="progress col-md-offset-2 col-md-8">
+                          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-         valuemax="100" style="width: 100%">
+                            <span class="sr-only">100% Complete</span>
+                          </div>
+                        </div> 
+                    </div> 
+                    <div id="data"class="hidden">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>Information</th>
+                                <th>Value</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><label for="name">Name: </label></td><td><div id="name"></div></td></tr>                        
+                                <tr><td><label for="title">Title: </label></td><td><div id="title"></td></div></tr>
+                                 <tr><td><label for="industry">Industry: </label></td><td><div id="industry"></div></tr>
+                                 <tr><td><label for="previous">Previous: </label></td><td><div id="previous"></div></tr>
+                                 <tr><td><label for="loc">Location: </label></td><td><div id="loc"></div></tr>
+                                 <tr><td><label for="edu">Education: </label></td><td><div id="edu"></div></tr>
+                                 <tr><td><label for="cur">Current: </label></td><td><div id="cur"></div></tr>
+                             </tbody>                              
+                        </table>                    
+                    </div>
+                </div>
+	        </div>
+        </div>
+</div>
+<script type="text/javascript">
+	function callvalue() {
+		alert('Hey');
+        $('#progress').removeClass('hidden');
+		$.ajax({
+		  type: "GET",
+		  url: "file.php",
+		  data: { url : $('#url').val() }
+		}).done(function(data) {
+		  //alert(data);
+        $('#progress').addClass('hidden');
+        $('#data').removeClass('hidden');
+		var data_new = JSON.parse(data);
+		  $('#name').text(data_new['name']);
+		  $('#title').text(data_new['title']);
+		  $('#industry').text(data_new['industry']);
+		  $('#previous').text(data_new['previous']);
+		$('#loc').text(data_new['loc']);
+		$('#edu').text(data_new['edu']);
+		$('#cur').text(data_new['cur']);
+		});
+	}
+	</script>
+
+</body>
+</html>
